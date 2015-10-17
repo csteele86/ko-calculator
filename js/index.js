@@ -5,14 +5,14 @@ $(document).ready(function() {
   }
   buttonArray.push("=");
   var myViewModel = function(){
-    var self = this, operator = '', num1 = 0, num2 = 0, firstNum = true;
+    var self = this, operator = '', num1 = '', num2 = '', sum ='', firstNum = true;
     self.buttons = ko.observableArray(buttonArray);
     self.result = ko.observable(0);
     self.keyPress = function(key) {
           if(key === 'CE'){
             self.result(0);
-            num1 = 0;
-            num2 = 0;
+            num1 = '';
+            num2 = '';
             operator = '';
             firstNum = true;
           }else if(key === '%' || key === 'x' || key === '/' || key === '+' || key === '-'){
@@ -31,19 +31,18 @@ $(document).ready(function() {
             }else {
               self.result(parseFloat(num1)-parseFloat(num2));
             }
-            num1 = 0;
-            num2 = 0;
+            num1 = '';
+            num2 = '';
             operator = '';
             firstNum = true;
             
           }else if(firstNum){
             num1 = num1 + key;
             console.log(num1);
-            self.result(key);
+            self.result(num1);
           }else {
             num2 = num2 + key;
-            console.log(num2);
-            self.result(key);
+            self.result(num2);
           }
     };
   };
