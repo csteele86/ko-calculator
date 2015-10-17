@@ -5,7 +5,7 @@ $(document).ready(function() {
   }
   buttonArray.push("=");
   var myViewModel = function(){
-    var self = this, operator = '', num1 = '', num2 = '', sum ='', firstNum = true;
+    var self = this, operator = '', num1 = '', num2 = '', sum = 0, firstNum = true;
     self.buttons = ko.observableArray(buttonArray);
     self.result = ko.observable(0);
     self.keyPress = function(key) {
@@ -15,34 +15,80 @@ $(document).ready(function() {
             num2 = '';
             operator = '';
             firstNum = true;
+            sum = 0;
           }else if(key === '%' || key === 'x' || key === '/' || key === '+' || key === '-'){
+            if(firstNum){
             operator = key;
             firstNum = false;
             self.result(key);
+            }else{
+              if(key === '%'){
+              sum = parseFloat(num1)%parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
+              console.log(num1+''+sum);
+            }else if(key === 'x'){
+              sum = parseFloat(num1)*parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
+              console.log(num1+''+sum);
+            }else if(key === '/'){
+              sum = parseFloat(num1)/parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
+              console.log(num1+''+sum);
+            }else if(key === '+'){
+              sum = parseFloat(num1)+parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
+              console.log(num1+''+sum);
+            }else {
+              sum = parseFloat(num1)-parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
+              console.log(num1+''+sum);
+            }
+            }
           }else if(key === "="){
             if(operator === '%'){
-              self.result(parseFloat(num1)%parseFloat(num2));
+              sum = parseFloat(num1)%parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
             }else if(operator === 'x'){
-              self.result(parseFloat(num1)*parseFloat(num2));
+              sum = parseFloat(num1)*parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
             }else if(operator === '/'){
-              self.result(parseFloat(num1)/parseFloat(num2));
+              sum = parseFloat(num1)/parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
             }else if(operator === '+'){
-              self.result(parseFloat(num1)+parseFloat(num2));
+              sum = parseFloat(num1)+parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
             }else {
-              self.result(parseFloat(num1)-parseFloat(num2));
+              sum = parseFloat(num1)-parseFloat(num2);
+              self.result(sum);
+              num1 = sum;
             }
             num1 = '';
             num2 = '';
             operator = '';
+            sum = 0;
             firstNum = true;
             
           }else if(firstNum){
             num1 = num1 + key;
-            console.log(num1);
             self.result(num1);
-          }else {
+          }else{
+            
+            if(sum>0){
+              num2 = key;
+              self.result(sum);
+            }else{
             num2 = num2 + key;
             self.result(num2);
+            }
           }
     };
   };
