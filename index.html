@@ -12,7 +12,9 @@
     <div id="calculator">
       <h1>Javascript Calculator</h1>
       <div class="well well-lg">
-        <span id="result" data-bind="text: result" class="well-sm"></span>
+        <span  id="historyDisp" data-bind="text: historyDisp"> </span>
+        <span  data-bind="text: result"> </span>
+        
         <!--ko foreach: buttons -->
         <button class="btn btn-primary" data-bind="text: $data, click: keyPress"></button>
         <!--/ko-->
