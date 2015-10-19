@@ -14,15 +14,18 @@ $(document).ready(function() {
     self.buttons = ko.observableArray(buttonArray);
     self.result = ko.observable(0);
     self.historyDisp = ko.observable('');
+    self.reset = function(){
+      self.result(0);
+      self.historyDisp('');
+      num1 = '';
+      num2 = '';
+      operator = '';
+      firstNum = true;
+      sum = 0;
+    }
     self.keyPress = function(key) {
       if (key === 'CE') {
-        self.result(0);
-        self.historyDisp('');
-        num1 = '';
-        num2 = '';
-        operator = '';
-        firstNum = true;
-        sum = 0;
+        self.reset();
       } else if (key === '%' || key === 'x' || key === '/' || key === '+' || key === '-') {
         if (firstNum) {
           operator = key;
