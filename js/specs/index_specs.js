@@ -23,6 +23,7 @@ describe("Index", function() {
     describe('view model', function() {
         //beforeEach will run before each test within a describe
         //helps you to write DRY (don't repeat yourself) code
+        //using this shaved 6 lines of code
         beforeEach(function() {
             //think of 'this' as the test context. 
             //it is only availabe within a beforeEach and afterEach 
