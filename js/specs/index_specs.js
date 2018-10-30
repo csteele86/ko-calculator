@@ -1,4 +1,3 @@
-//describe is a container for tests
 describe("Index", function(){
     //it is the test and must be within a describe
     it('should get all of the buttons', () => {
@@ -12,6 +11,11 @@ describe("Index", function(){
 
         //using "not" negates the matcher
         expect(buttons).not.toContain("10");
+    });
+
+    //adding an x will disable the test
+    xit('should apply the knockout bindings', () => {
+        //we will revisit this later
     });
 
     //describe can be nested, but not an it
