@@ -1,9 +1,11 @@
+//in most cases, you will at least need to move everything out of a document ready
+//so that you can test your code easier.
 $(document).ready(function() {
   init();
 });
 
 function init() {
-  ko.applyBindings(myViewModel, document.getElementById("calculator"));  
+  ko.applyBindings(myViewModel, $("#calculator").get(0));
 }
 
 var myViewModel = function() {
