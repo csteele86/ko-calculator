@@ -31,9 +31,9 @@ describe("Index", function() {
         });
 
         it('should initialize a view model', function() {
-            expect(self.buttons()).toBeTruthy();
+            expect(this.viewModel.buttons()).toBeTruthy();
     
-            expect(self.result()).toEqual('0');
+            expect(this.viewModel.result()).toEqual('0');
         });
     
         it('should reset the calculator', function() {
