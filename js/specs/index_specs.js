@@ -24,10 +24,10 @@ describe("Index", function(){
             var viewModel = new myViewModel();
     
             //toBeTruthy uses boolean casting testing
-            expect(self.buttons()).toBeTruthy();
+            expect(viewModel.buttons()).toBeTruthy();
     
             //toEqual uses === and checks for property equivalency (i.e., primitive types)
-            expect(self.result()).toEqual('0');
+            expect(viewModel.result()).toEqual('0');
         });
     
         it('should reset the calculator', () => {
