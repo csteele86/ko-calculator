@@ -1,7 +1,4 @@
 describe("Index", function() { 
-    //beforeAll will run once before all tests
-    //use this to help reduce expensive test setup
-    //recommended to have a corresponding afterAll to redo what was done here
     beforeAll(function(){
         console.log("Running once before all tests");
     });
@@ -16,18 +13,42 @@ describe("Index", function() {
         expect(buttons).not.toContain("10");
     });
 
-    xit('should apply the knockout bindings', function() {
-        //we will revisit this later
+    it('should apply the knockout bindings', function() {
+        //spyOn allows you to create a test double that will track all calls and arguments
+        //to the object and function you provide
+        //were doing this because we cannot call applyBindings twice
+        //a good roll of thumb is to not mock what you don't own unless it is easy
+        var koSpy = spyOn(ko, "applyBindings").and.callFake(function() {});
+
+        //createSpy is a way to create adhoc spy and behaves just like spyOn
+        //mainly used when there is not a function to spy on
+        var getSpy = jasmine.createSpy("jqGet").and.callFake(function(i) {
+            return null;
+        });
+
+        //a simple approach to mocking out jquery
+        spyOn(window, "$").and.callFake(function(selector) {
+            return {
+                'get': getSpy //this is the spy we created above
+            }
+        });
+
+        init();
+
+        //we can check the spies to see how many times they were called
+        expect(koSpy).toHaveBeenCalledTimes(1);
+        //we can also check to see if a spy was called with certain arguments
+        expect(koSpy).toHaveBeenCalledWith(myViewModel, null);
+
+        expect(window.$).toHaveBeenCalledTimes(1);
+        expect(window.$).toHaveBeenCalledWith("#calculator");
+        
+        expect(getSpy).toHaveBeenCalledTimes(1);
+        expect(getSpy).toHaveBeenCalledWith(0);
     });
 
     describe('view model', function() {
-        //beforeEach will run before each test within a describe
-        //helps you to write DRY (don't repeat yourself) code
-        //using this shaved 6 lines of code
         beforeEach(function() {
-            //think of 'this' as the test context. 
-            //it is only availabe within a beforeEach and afterEach 
-            //note that 'this' cannot be passed to arrow functions (i.e., () => )
             this.viewModel = new myViewModel();                
         });
 
@@ -46,7 +67,6 @@ describe("Index", function() {
 
         describe("when a key is pressed", function() {            
             it('the CE button should reset the calculator', function() {
-                //take note that we are in a different describe and we are still accessing 'this'
                 this.viewModel.result('100');
     
                 this.viewModel.keyPress('CE');
@@ -86,15 +106,12 @@ describe("Index", function() {
                 this.expect = '19*';
             });
 
-            //aferEach will run after each test within a descirbe
             afterEach(function() {
                 expect(this.viewModel.result()).toBe(this.expect);                
             });
         });        
     }); 
     
-    //afterAll will run once after all tests
-    //use this to undo changes done in beforeAll
     afterAll(function(){
         console.log("Running once after all tests.");
     });
