@@ -41,10 +41,12 @@ describe("Index", function() {
         expect(koSpy).toHaveBeenCalledWith(myViewModel, null);
 
         expect(window.$).toHaveBeenCalledTimes(1);
-        expect(window.$).toHaveBeenCalledWith("#calculator");
+        //jasmine.any takes a constructor (i.e., Function, Object, Number, etc) or class name
+        expect(window.$).toHaveBeenCalledWith(jasmine.any(String));
         
         expect(getSpy).toHaveBeenCalledTimes(1);
-        expect(getSpy).toHaveBeenCalledWith(0);
+        //jasmine.anything will return true as long as the argument was not null or undefined
+        expect(getSpy).toHaveBeenCalledWith(jasmine.anything());
     });
 
     describe('view model', function() {
